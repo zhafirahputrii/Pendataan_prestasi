@@ -23,7 +23,7 @@ class PrestasiController extends Controller
      */
     public function admin_add_prestasi()
     {
-        return view('admin.add_prestasi');
+        return view('admin.create');
     }
     public function admin_create_prestasi(Request $request)
     {
@@ -36,45 +36,36 @@ class PrestasiController extends Controller
     public function show($id)
     {
         $prestasi = Prestasi::find($id);
-        return view('admin.show', compact(['prestasi']));
+        return view('admin.show');
     }
-    public function admin_edit_prestasi($id)
-    {
-        $kejuaraan = Prestasi::find($id);
-        return view('admin.edit_prestasi', compact(['kejuaraan']) , [
-            "title" => 'Manajemen Prestasi'
-        ]);
-    }
-
-    public function admin_update_prestasi(Request $request, $id)
+    public function edit(string $id)
     {
         $prestasi = Prestasi::find($id);
-
-        $request->validate([
-            'nama' => 'required',
-            'nisn' => 'required',
-            'kelas' => 'required',
-            'alamat' => 'required',
-            'prestasi' => 'required',
-            'tingkat' => 'required',
-            'date' => 'required',
-        ]);
-
-        $cek = [
-                'nama' => $request->name,
-                'nisn' => $request->nisn,
-                'kelas' => $request->kelas,
-                'alamat' => $request['alamat'],
-                'prestasi' => $request['prestasi'],
-               'tingkat' => $request['tingkat'],
-                'tanggal' => $request['date'],
-            ];
-
-
-        if($prestasi->update($cek)){
-            $prestasi->save();
-        }
-
-        return redirect()->route('prestasi')->with('sukses','Data Berhasil Diedit');
+  
+        return view('admin.edit', compact('prestasi'));
+    }
+  
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $prestasi = Prestasi::find($id);
+  
+        $prestasi->update($request->all());
+  
+        return redirect()->route('prestasi')->with('success', 'data di update');
+    }
+  
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $prestasi = Prestasi::find($id);
+  
+        $prestasi->delete();
+  
+        return redirect()->route('prestasi')->with('success', 'data dihapus');
     }
 }

@@ -55,7 +55,7 @@ header {
     <a href="#" class="logo">SI Prestasi</a>
     <div class="navbar"> 
 
-             <a href="index">Home</a>
+             <a href="/">Home</a>
              <a href="prestasi">Prestasi</a>
              <a href="berita">Berita</a>
 </div>
